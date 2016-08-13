@@ -4,13 +4,11 @@ $(document).ready(function(){
     "http://aws-vmix.pianomad.com:8088/api/"
   ];
 
-  var is_current_live = false;
-
   var live_scenes = ["2", "3"];
   var jingle_scenes = ["4", "5", "6", "10"];
 
   var schedule = {
-    "current_scene": null,
+    "currentScene": null,
     "live": null,
     "jingles": []
   };
@@ -21,12 +19,14 @@ $(document).ready(function(){
 
   // -- scene queueing
 
-  function enqueueScene(scene, live) {
+  function enqueueScene(scene) {
+    console.log("enqueue scene: " + scene);
     if (isLive(scene)) {
       schedule["live"] = scene;
     } else {
       schedule["jingles"].push(scene);
     }
+    console.log("queue state: " + JSON.stringify(schedule));
   }
 
   function dequeueScene() {
@@ -40,7 +40,53 @@ $(document).ready(function(){
       // select live
       nextScene = schedule["live"];
     }
+    console.log("dequeue scene: " + nextScene);
+    console.log("queue state: " + JSON.stringify(schedule));
     return nextScene;
+  }
+
+  function updateScenes() {
+    var currentScene = schedule["currentScene"];
+    console.log("current scene: " + currentScene);
+    if (currentScene && !isLive(currentScene)) {
+      // Wait for completion, then this function will be invoked again.
+      // After completion the current scene will be deleted.
+      // Live scene can be switched to another one immediately.
+      console.log("can't break into a jingle");
+      return;
+    }
+    var nextScene = dequeueScene();
+    console.log("next scene: " + nextScene);
+    if (!nextScene) {
+      console.log("nothing to play");
+      return;
+    }
+    if (nextScene == currentScene) {
+      console.log("nothing to switch");
+      return;
+    }
+    schedule["currentScene"] = nextScene;
+    var deferred = $.when({})
+      .then(function() { return callVmixFunction("Restart", {"Input": nextScene}); })
+      .then(function() { return callVmixFunction("CutDirect", {"Input": nextScene}); })
+      .then(function() {
+        console.log("cutting into scene: " + nextScene);
+        schedule["currentScene"] = nextScene;
+        console.log("queue state: " + JSON.stringify(schedule));
+      });
+    if (!isLive(nextScene)) {
+      deferred = deferred.then(function() {
+        console.log("waiting for completion");
+        return callVmixFunction("WaitForCompletion", {"Input": -1});
+      })
+    }
+    deferred = deferred.then(function() {
+      if (!isLive(nextScene)) {
+        console.log("scene completed: " + nextScene);
+        schedule["currentScene"] = null;
+      }
+      updateScenes();
+    });
   }
 
   // -- vMix API function
@@ -59,7 +105,7 @@ $(document).ready(function(){
   }
 
   // create URL for a vMix function with parameters
-  function vmixFunction(name, params) {
+  function vmixFunctionUrl(name, params) {
     params_ = {"Function": name};
     // clone the function params
     for (key in params) {
@@ -68,64 +114,25 @@ $(document).ready(function(){
     return vmixUrl(params_);
   }
 
-  // http://www.jefferydurand.com/jquery/sequential/javascript/ajax/2015/04/13/jquery-sequential-ajax-promise-deferred.html
-  function getAjaxDeferred(url){
-    return function(){
-      // wrap with a deferred
-      var defer = $.Deferred();
-      console.log(url);
-      $.ajax({ url: url, method: 'GET'}).complete(function(){
-        // resolve when complete always.  Even on failure we
-        // want to keep going with other requests
-        defer.resolve();
-      });
-      // return a promise so that we can chain properly in the each
-      return defer.promise();
-    };
-  }
-
-  // make a single HTTP GET request to a given URL
-  function httpGet(url) {
-    $.get(url);
-  }
-
-  // make synchronous multiple HTTP GET requests to a given URLs
-  function httpGetSequence(urls) {
-    var base = $.when({});
-    $.each(urls, function(index, url) {
-      base = base.then(getAjaxDeferred(url));
-    });
-  }
-
-  function scheduleScene(input) {
-    if (is_current_live) {
-      httpGetSequence([
-        vmixFunction("Restart", {"Input": input}),
-        vmixFunction("CutDirect", {"Input": input})
-      ]);
-    } else {
-      httpGetSequence([
-        vmixFunction("WaitForCompletion", {"Input": "-1"}),
-        vmixFunction("Restart", {"Input": input}),
-        vmixFunction("CutDirect", {"Input": input})
-      ]);
-    }
-    // TODO: this must be called after the last HTTP request
-    is_current_live = isLive(input);
+  // calls a vMix function
+  // and returns a jQuery Deferred object of the HTTP request
+  function callVmixFunction(name, params) {
+    var url = vmixFunctionUrl(name, params);
+    console.log(url);
+    return $.get(url);
   }
 
   // -- custom vMix control functions
 
   // play selected title with given background
   function playTitleWithBackground(title_scene, background_scene, background_index) {
-    httpGetSequence([
-      vmixFunction("WaitForCompletion", {"Input": "-1"}),
-      vmixFunction("SelectIndex", {"Input": background_scene, "Value": background_index}),
-      vmixFunction("SetMultiViewOverlay", {"Input": background_scene, "Value": "1," + title_scene}),
-      vmixFunction("CutDirect", {"Input": background_scene}),
-      vmixFunction("Play", {"Input": background_scene}),
-      vmixFunction("Play", {"Input": title_scene})
-    ]);
+    $.when({})
+      .then(function() { return callVmixFunction("WaitForCompletion", {"Input": "-1"}); })
+      .then(function() { return callVmixFunction("SelectIndex", {"Input": background_scene, "Value": background_index}); })
+      .then(function() { return callVmixFunction("SetMultiViewOverlay", {"Input": background_scene, "Value": "1," + title_scene}); })
+      .then(function() { return callVmixFunction("CutDirect", {"Input": background_scene}); })
+      .then(function() { return callVmixFunction("Play", {"Input": background_scene}); })
+      .then(function() { return callVmixFunction("Play", {"Input": title_scene}); });
   }
 
   // -- create the UI elements and bind actions to them
@@ -137,10 +144,10 @@ $(document).ready(function(){
   $("#api_url").val(servers[0]);
 
   $("#programPlay").click(function() {
-    httpGet(vmixFunction("Play", {"Input": "-1"}));
+    callVmixFunction("Play", {"Input": "-1"});
   });
   $("#programPause").click(function() {
-    httpGet(vmixFunction("Pause", {"Input": "-1"}));
+    callVmixFunction("Pause", {"Input": "-1"});
   });
 
   function createButton(scene) {
@@ -149,7 +156,8 @@ $(document).ready(function(){
       .text(label)
       .on("click", {"scene": scene},
         function(event) {
-          scheduleScene(event.data.scene);
+          enqueueScene(event.data.scene);
+          updateScenes();
         }
       );
     return $("<div>", {"class": "col-sm-2"}).append(button);
