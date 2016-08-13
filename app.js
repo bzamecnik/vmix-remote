@@ -3,11 +3,15 @@ $(document).ready(function(){
     "http://lenka-thinkpad.local:8088/api/",
     "http://aws-vmix.pianomad.com:8088/api/"
   ];
-  for (i in servers) {
-    var option = $("<option>").text(servers[i]);
-    $("#servers").append(option);
+
+  var is_current_live = false;
+
+  var live_scenes = ["2", "3"];
+  var jingle_scenes = ["4", "5", "6", "10"];
+  function isLive(scene) {
+    return live_scenes.indexOf(scene) >= 0;
   }
-  $("#api_url").val(servers[0]);
+  }
 
   function apiUrl() {
     return $("#api_url").val();
@@ -61,12 +65,7 @@ $(document).ready(function(){
     });
   }
 
-  var is_current_live = false;
-
-  var live_scenes = ["5", "6", "7"];
-  var jingle_scenes = ["1", "2", "3", "4"];
-
-  function scheduleScene(input, live=false) {
+  function scheduleScene(input) {
     if (is_current_live) {
       httpGetSequence([
         vmixFunction("Restart", {"Input": input}),
@@ -74,14 +73,22 @@ $(document).ready(function(){
       ]);
     } else {
       httpGetSequence([
-        vmixFunction("Restart", {"Input": input}),
         vmixFunction("WaitForCompletion", {"Input": "-1"}),
+        vmixFunction("Restart", {"Input": input}),
         vmixFunction("CutDirect", {"Input": input})
       ]);
     }
     // TODO: this must be called after the last HTTP request
-    is_current_live = live;
+    is_current_live = isLive(input);
   }
+
+  // -- create the UI elements and bind actions to them
+
+  for (i in servers) {
+    var option = $("<option>").text(servers[i]);
+    $("#servers").append(option);
+  }
+  $("#api_url").val(servers[0]);
 
   $("#programPlay").click(function() {
     httpGet(vmixFunction("Play", {"Input": "-1"}));
@@ -90,13 +97,13 @@ $(document).ready(function(){
     httpGet(vmixFunction("Pause", {"Input": "-1"}));
   });
 
-  function createButton(scene, live) {
-    var label = (live ? "Live" : "Jingle") + " " + scene;
+  function createButton(scene) {
+    var label = (isLive(scene) ? "Live" : "Jingle") + " " + scene;
     var button = $("<button>", {"class": "btn btn-primary"})
       .text(label)
-      .on("click", {"scene": scene, "live": live},
+      .on("click", {"scene": scene},
         function(event) {
-          scheduleScene(event.data.scene, event.data.live);
+          scheduleScene(event.data.scene);
         }
       );
     return $("<div>", {"class": "col-sm-2"}).append(button);
@@ -104,10 +111,10 @@ $(document).ready(function(){
 
   for (i in live_scenes) {
     var scene = live_scenes[i];
-    $("#live_scenes").append(createButton(scene, live=true));
+    $("#live_scenes").append(createButton(scene));
   }
   for (i in jingle_scenes) {
     var scene = jingle_scenes[i];
-    $("#jingle_scenes").append(createButton(scene, live=false));
+    $("#jingle_scenes").append(createButton(scene));
   }
 });
