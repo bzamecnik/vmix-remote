@@ -8,10 +8,42 @@ $(document).ready(function(){
 
   var live_scenes = ["2", "3"];
   var jingle_scenes = ["4", "5", "6", "10"];
+
+  var schedule = {
+    "current_scene": null,
+    "live": null,
+    "jingles": []
+  };
+
   function isLive(scene) {
     return live_scenes.indexOf(scene) >= 0;
   }
+
+  // -- scene queueing
+
+  function enqueueScene(scene, live) {
+    if (isLive(scene)) {
+      schedule["live"] = scene;
+    } else {
+      schedule["jingles"].push(scene);
+    }
   }
+
+  function dequeueScene() {
+    var jingles = schedule["jingles"];
+    var nextScene = null;
+    if (jingles.length > 0) {
+      // select from jingles with higher priority
+      nextScene = jingles[0];
+      schedule["jingles"] = jingles.slice(1);
+    } else {
+      // select live
+      nextScene = schedule["live"];
+    }
+    return nextScene;
+  }
+
+  // -- vMix API function
 
   function apiUrl() {
     return $("#api_url").val();
