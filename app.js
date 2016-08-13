@@ -114,6 +114,20 @@ $(document).ready(function(){
     is_current_live = isLive(input);
   }
 
+  // -- custom vMix control functions
+
+  // play selected title with given background
+  function playTitleWithBackground(title_scene, background_scene, background_index) {
+    httpGetSequence([
+      vmixFunction("WaitForCompletion", {"Input": "-1"}),
+      vmixFunction("SelectIndex", {"Input": background_scene, "Value": background_index}),
+      vmixFunction("SetMultiViewOverlay", {"Input": background_scene, "Value": "1," + title_scene}),
+      vmixFunction("CutDirect", {"Input": background_scene}),
+      vmixFunction("Play", {"Input": background_scene}),
+      vmixFunction("Play", {"Input": title_scene})
+    ]);
+  }
+
   // -- create the UI elements and bind actions to them
 
   for (i in servers) {
