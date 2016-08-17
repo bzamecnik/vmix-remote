@@ -1,0 +1,133 @@
+<vmix>
+  <version>17.0.0.106</version>
+  <inputs>
+    <input
+      key="3e1c3f4f-9592-42f0-85f8-f6a0c70958f0"
+      number="1"
+      type="VideoList"
+      title="List - This guy! It's a very good pianist. Thank you for your music and good luck!.mp4"
+      state="Paused"
+      position="2069"
+      duration="9078"
+      loop="True"
+      muted="True"
+      volume="100"
+      balance="0"
+      solo="False"
+      audiobusses="M"
+      meterF1="0"
+      meterF2="0"
+      selectedIndex="3">List - This guy! It's a very good pianist. Thank you for your music and good luck!.mp4</input>
+    <input key="3c8e3611-d9d3-409a-a3e2-3acc1d434ef4" number="2" type="Colour" title="Colour Bars" state="Paused" position="0" duration="0" loop="False">Colour Bars</input>
+    <input key="a99ef8d4-dc51-419d-8b0b-076ea81b2f49" number="3" type="Video" title="Xplosion.avi" state="Paused" position="500" duration="2000" loop="True" muted="True" volume="100" balance="0" solo="False" audiobusses="M,A,B" meterF1="0" meterF2="0">Xplosion.avi</input>
+    <input
+      key="4a342f27-99a4-42f9-a85e-9b7550d52d5c"
+      number="4"
+      type="Video"
+      title="This guy! It's a very good pianist. Thank you for your music and good luck!.mp4"
+      state="Paused"
+      position="2069"
+      duration="9078"
+      loop="False"
+      muted="True"
+      volume="100"
+      balance="0"
+      solo="False"
+      audiobusses="M"
+      meterF1="0"
+      meterF2="0">This guy! It's a very good pianist. Thank you for your music and good luck!.mp4</input>
+    <input
+      key="b50d4c17-6b48-4417-ae3f-fc61cf745e33"
+      number="5"
+      type="Video"
+      title="#purenewzealand #piano at the #seaside #akaroaharbour #akaroabay #travelporn #loveit.mp4"
+      state="Paused"
+      position="6000"
+      duration="14977"
+      loop="False"
+      muted="True"
+      volume="100"
+      balance="0"
+      solo="False"
+      audiobusses="M"
+      meterF1="0"
+      meterF2="0">#purenewzealand #piano at the #seaside #akaroaharbour #akaroabay #travelporn #loveit.mp4</input>
+    <input
+      key="256ab1aa-a2b9-4727-ac07-b8214d619515"
+      number="6"
+      type="Video"
+      title="#PIANOMAN #viewlikethis.mp4"
+      state="Paused"
+      position="0"
+      duration="10077"
+      loop="False"
+      muted="True"
+      volume="100"
+      balance="0"
+      solo="False"
+      audiobusses="M"
+      meterF1="0"
+      meterF2="0">#PIANOMAN #viewlikethis.mp4</input>
+    <input key="bce14623-39ab-4dcc-9583-32ca7bfd87c9" number="7" type="Colour" title="JINGLE" state="Completed" position="0" duration="0" loop="False">JINGLE</input>
+    <input
+      key="efc219f5-77f1-464e-8d7e-9576bb87abe8"
+      number="8"
+      type="Video"
+      title="rising-bubbles-transition-blue_ZkqdeCugB.mov"
+      state="Completed"
+      position="3337"
+      duration="3337"
+      loop="False"
+      muted="False"
+      volume="100"
+      balance="0"
+      solo="False"
+      audiobusses="M,A,B"
+      meterF1="0"
+      meterF2="0">rising-bubbles-transition-blue_ZkqdeCugB.mov</input>
+    <input
+      key="ce92e227-eb2b-47fb-8c15-fe57729a098b"
+      number="9"
+      type="Video"
+      title="Amazing! Pianist on the beach ! LIVING THE DREAM.mp4"
+      state="Paused"
+      position="99448"
+      duration="146425"
+      loop="False"
+      muted="True"
+      volume="100"
+      balance="0"
+      solo="False"
+      audiobusses="M"
+      meterF1="0"
+      meterF2="0">Amazing! Pianist on the beach ! LIVING THE DREAM.mp4</input>
+    <input
+      key="b2312c6d-51d8-4c5a-96b1-8d2f7adaae4c"
+      number="10"
+      type="VideoList"
+      title="List - #purenewzealand #piano at the #seaside #akaroaharbour #akaroabay #travelporn #loveit.mp4"
+      state="Paused"
+      position="2867"
+      duration="14977"
+      loop="False"
+      muted="False"
+      volume="100"
+      balance="0"
+      solo="False"
+      audiobusses="M"
+      meterF1="0"
+      meterF2="0"
+      selectedIndex="1">List - #purenewzealand #piano at the #seaside #akaroaharbour #akaroabay #travelporn #loveit.mp4<overlay index="0" key="efc219f5-77f1-464e-8d7e-9576bb87abe8"/></input>
+  </inputs>
+  <overlays><overlay number="1"/><overlay number="2"/><overlay number="3"/><overlay number="4"/><overlay number="5"/><overlay number="6"/></overlays>
+  <preview>9</preview>
+  <active>10</active>
+  <fadeToBlack>False</fadeToBlack>
+  <transitions><transition number="1" effect="Fade" duration="500"/><transition number="2" effect="Merge" duration="1000"/><transition number="3" effect="Wipe" duration="1000"/><transition number="4" effect="CubeZoom" duration="1000"/></transitions>
+  <recording>False</recording>
+  <external>False</external>
+  <streaming>False</streaming>
+  <playList>False</playList>
+  <multiCorder>False</multiCorder>
+  <audio><master volume="100" muted="False" meterF1="0" meterF2="0" headphonesVolume="100"/></audio>
+</vmix>
