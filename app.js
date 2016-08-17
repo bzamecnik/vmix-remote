@@ -4,8 +4,9 @@ $(document).ready(function(){
     "http://aws-vmix.pianomad.com:8088/api/"
   ];
 
-  var live_scenes = ["2", "3"];
-  var jingle_scenes = ["4", "5", "6", "10"];
+  var live_scenes = ["4", "5"];
+  var jingle_scenes = ["1", "2", "3"];
+  var all_scenes = live_scenes.concat(jingle_scenes);
 
   var schedule = {
     "currentScene": null,
@@ -17,13 +18,35 @@ $(document).ready(function(){
     return live_scenes.indexOf(scene) >= 0;
   }
 
+  function setButtonColors() {
+    function setButtonClass(button, css_class) {
+      button.removeClass(function (index, css) {
+        return (css.match (/(^|\s)btn-\S+/g) || []).join(' ');
+      }).addClass(css_class);
+    }
+
+    for (i in all_scenes) {
+      var scene = all_scenes[i];
+      var is_current = scene == schedule["currentScene"];
+      var is_scheduled = schedule["jingles"].indexOf(scene) >= 0 || (!is_current && (schedule["live"] == scene));
+      var color = "btn-primary";
+      if (is_scheduled) {
+        color = "btn-warning";
+      }
+      if (is_current) {
+        color = "btn-danger";
+      }
+      setButtonClass($("#scene-" + scene), color);
+    }
+  }
+
   // -- scene queueing
 
   function enqueueScene(scene) {
     console.log("enqueue scene: " + scene);
     if (isLive(scene)) {
       schedule["live"] = scene;
-    } else {
+    } else if (schedule["jingles"].indexOf(scene) < 0) {
       schedule["jingles"].push(scene);
     }
     console.log("queue state: " + JSON.stringify(schedule));
@@ -46,6 +69,7 @@ $(document).ready(function(){
   }
 
   function updateScenes() {
+    setButtonColors();
     var currentScene = schedule["currentScene"];
     console.log("current scene: " + currentScene);
     if (currentScene && !isLive(currentScene)) {
@@ -72,6 +96,7 @@ $(document).ready(function(){
       .then(function() {
         console.log("cutting into scene: " + nextScene);
         schedule["currentScene"] = nextScene;
+        setButtonColors();
         console.log("queue state: " + JSON.stringify(schedule));
       });
     if (!isLive(nextScene)) {
@@ -81,6 +106,7 @@ $(document).ready(function(){
       })
     }
     deferred = deferred.then(function() {
+      console.log("DEBUG: after cut");
       if (!isLive(nextScene)) {
         console.log("scene completed: " + nextScene);
         schedule["currentScene"] = null;
@@ -153,6 +179,7 @@ $(document).ready(function(){
   function createButton(scene) {
     var label = (isLive(scene) ? "Live" : "Jingle") + " " + scene;
     var button = $("<button>", {"class": "btn btn-primary"})
+      .attr("id", "scene-" + scene)
       .text(label)
       .on("click", {"scene": scene},
         function(event) {
