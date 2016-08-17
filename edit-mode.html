@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Pianomad vMix Remote</title>
+
+	<!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+
+	<style>
+		.tile {
+			width: 100px;
+			height: 100px;
+			margin-bottom: 10px;
+		}
+		/*#sortable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
+	#sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }*/
+	</style>
+</head>
+
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<h2>Live</h2>
+		</div>
+		<div class="row live">
+			<span class="scenes sortable">
+				<div class="col-sm-2">
+					<button class="btn btn-primary tile edit-scene">Scene 1</button>
+				</div>
+				<div class="col-sm-2">
+					<button class="btn btn-primary tile edit-scene">Scene 2</button>
+				</div>
+				<div class="col-sm-2">
+					<button class="btn btn-primary tile edit-scene">Scene 3</button>
+				</div>
+			</span>
+			<div class="col-sm-2">
+				<button class="btn btn-default tile add-scene">
+					<span class="glyphicon glyphicon-plus"></span>
+				</button>
+			</div>
+
+		</div>
+		<div class="row">
+			<h2>Jingle</h2>
+		</div>
+		<div class="row jingle">
+			<span class="scenes sortable">
+				<div class="col-sm-2">
+					<button class="btn btn-primary tile edit-scene">Scene 4</button>
+				</div>
+				<div class="col-sm-2">
+					<button class="btn btn-primary tile edit-scene">Scene 5</button>
+				</div>
+				<div class="col-sm-2">
+					<button class="btn btn-primary tile edit-scene">Scene 6</button>
+				</div>
+			</span>
+			<div class="col-sm-2">
+				<button class="btn btn-default tile add-scene">
+					<span class="glyphicon glyphicon-plus"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+	<script src="jquery.ui.touch-punch.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script>
+		$(function() {
+			$(".sortable")
+				.sortable({
+					handle: 'button',
+					cancel: '.disabled-button',
+					connectWith: '.sortable'
+				})
+				.disableSelection();
+			$(".live .add-scene").on('click', function() {
+					$(".live .scenes")
+						.append($("<div>", {"class": "col-sm-2"})
+							.append($("<button>", {"class": "btn btn-primary tile edit-scene"})
+								.text("foo")));
+				});
+			$(".jingle .add-scene").on('click', function() {
+					$(".jingle .scenes")
+						.append($("<div>", {"class": "col-sm-2"})
+							.append($("<button>", {"class": "btn btn-primary tile edit-scene"})
+								.text("foo")));
+				});
+		});
+	</script>
+</body>
+
+</html>
