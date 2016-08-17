@@ -183,7 +183,7 @@ $(document).ready(function(){
 
   function createButton(scene) {
     var label = (isLive(scene) ? "Live" : "Jingle") + " " + scene;
-    var button = $("<button>", {"class": "btn btn-primary"})
+    var button = $("<button>", {"class": "btn btn-lg btn-primary"})
       .attr("id", "scene-" + scene)
       .text(label)
       .on("click", {"scene": scene},
