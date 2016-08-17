@@ -93,26 +93,31 @@ $(document).ready(function(){
     var deferred = $.when({})
       .then(function() { return callVmixFunction("Restart", {"Input": nextScene}); })
       .then(function() { return callVmixFunction("CutDirect", {"Input": nextScene}); })
-      .then(function() {
-        console.log("cutting into scene: " + nextScene);
-        schedule["currentScene"] = nextScene;
-        setButtonColors();
-        console.log("queue state: " + JSON.stringify(schedule));
-      });
+      .then(function() { return callVmixFunction("Play", {"Input": nextScene}); })
+      .then((function(scene) {
+        return function() {
+          console.log("cutting into scene: " + scene);
+          schedule["currentScene"] = scene;
+          setButtonColors();
+          console.log("queue state: " + JSON.stringify(schedule));
+        }
+      })(nextScene));
     if (!isLive(nextScene)) {
       deferred = deferred.then(function() {
         console.log("waiting for completion");
         return callVmixFunction("WaitForCompletion", {"Input": -1});
       })
     }
-    deferred = deferred.then(function() {
-      console.log("DEBUG: after cut");
-      if (!isLive(nextScene)) {
-        console.log("scene completed: " + nextScene);
-        schedule["currentScene"] = null;
+    deferred = deferred.then((function(scene) {
+      return function() {
+        console.log("DEBUG: after cut");
+        if (!isLive(scene)) {
+          console.log("scene completed: " + scene);
+          schedule["currentScene"] = null;
+        }
+        updateScenes();
       }
-      updateScenes();
-    });
+    })(nextScene));
   }
 
   // -- vMix API function
@@ -145,7 +150,7 @@ $(document).ready(function(){
   function callVmixFunction(name, params) {
     var url = vmixFunctionUrl(name, params);
     console.log(url);
-    return $.get(url);
+    return $.get(url).done(function() { console.log("DONE: " + url);});
   }
 
   // -- custom vMix control functions
