@@ -46,7 +46,8 @@
 				</div>
 			</span>
 			<div class="col-sm-2">
-				<button class="btn btn-default tile add-scene">
+				<button class="btn btn-default tile add-scene"
+					data-toggle="modal" data-target="#addSceneModal" data-scene-type="live">
 					<span class="glyphicon glyphicon-plus"></span>
 				</button>
 			</div>
@@ -68,12 +69,64 @@
 				</div>
 			</span>
 			<div class="col-sm-2">
-				<button class="btn btn-default tile add-scene">
+				<button class="btn btn-default tile add-scene"
+					data-toggle="modal" data-target="#addSceneModal" data-scene-type="jingle">
 					<span class="glyphicon glyphicon-plus"></span>
 				</button>
 			</div>
 		</div>
 	</div>
+
+	<!-- Create a new scene button -->
+	<div id="addSceneModal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form class="form-horizontal">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Add scene button</h4>
+				</div>
+				<div class="modal-body">
+
+
+						<div class="form-group">
+							<label for="scene_number" class="col-sm-2 control-label">Scene number</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="scene_number">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="scene_title" class="col-sm-2 control-label">Title</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="scene_title">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<label class="radio-inline">
+									<input type="radio" name="scene_type" value="live"> live
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="scene_type" value="jingle"> jingle
+								</label>
+							</div>
+						</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</div>
+				</form>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
@@ -88,18 +141,34 @@
 					connectWith: '.sortable'
 				})
 				.disableSelection();
-			$(".live .add-scene").on('click', function() {
-					$(".live .scenes")
-						.append($("<div>", {"class": "col-sm-2"})
-							.append($("<button>", {"class": "btn btn-primary tile edit-scene"})
-								.text("foo")));
-				});
-			$(".jingle .add-scene").on('click', function() {
-					$(".jingle .scenes")
-						.append($("<div>", {"class": "col-sm-2"})
-							.append($("<button>", {"class": "btn btn-primary tile edit-scene"})
-								.text("foo")));
-				});
+
+			$('#addSceneModal').on('show.bs.modal', function (event) {
+			  var button = $(event.relatedTarget);
+			  var sceneType = button.data('scene-type');
+				$(this).find('.modal-body input[type=text]').val('');
+			  $(this)
+					.find('.modal-body input[name=scene_type][value=' + sceneType +']')
+      		.prop('checked', true);
+			});
+
+			$("#addSceneModal form").on('submit', function(e) {
+				var $form = $(this);
+				var sceneNumber = $form.find("input[name=scene_number]").val();
+				var sceneTitle = $form.find("input[name=scene_title]").val();
+				var sceneType = $form.find("input[name=scene_type]:checked").val();
+
+				$("." + sceneType + " .scenes")
+					.append($("<div>", {
+							"class": "col-sm-2"
+						})
+						.append($("<button>", {
+								"class": "btn btn-primary tile edit-scene"
+							})
+							.text(sceneNumber + " " + sceneTitle)));
+
+				event.preventDefault();
+				$form.closest('.modal').modal('hide');
+			});
 		});
 	</script>
 </body>
