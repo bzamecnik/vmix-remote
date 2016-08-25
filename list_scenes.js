@@ -58,6 +58,8 @@ $(document).ready(function(){
           .append(number + " - " + durationMillis + " - " + title)
         );
     });
+    // TODO: the callback gets executed before the radio group is toggled :(
+    $("#scenes label").on('click', function() { saveSettings(); });
   }
 
   function getScenesByGroup() {
@@ -105,6 +107,4 @@ $(document).ready(function(){
   // $("#save_settings").click(saveSettings);
 
   updateStatus();
-
-  $("#scenes label").on('click', saveSettings);
 });
