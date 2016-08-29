@@ -2,5 +2,6 @@
 
 angular.module('vmixRemoteApp', [
   'ngRoute',
+  'sceneQueue',
   'sceneEditor',
 ]);

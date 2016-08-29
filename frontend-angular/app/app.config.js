@@ -7,9 +7,12 @@ angular.
       $locationProvider.hashPrefix('!');
 
       $routeProvider.
+        when('/scene-queue', {
+          template: '<scene-queue></scene-queue>'
+        }).
         when('/scene-editor', {
           template: '<scene-editor></scene-editor>'
         }).
-        otherwise('/scene-editor');
+        otherwise('/scene-queue');
     }
   ]);
