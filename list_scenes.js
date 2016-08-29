@@ -91,7 +91,7 @@ $(document).ready(function(){
       'scenesByGroup': getScenesByGroup()
     };
     window.localStorage['vmixRemote'] = JSON.stringify(settings);
-    console.log('settings saved:' + settings);
+    console.log('settings saved: ' + JSON.stringify(settings));
   }
 
   function loadSettings() {
