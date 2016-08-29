@@ -1,10 +1,10 @@
 'use strict';
 
 angular.
-  module('sceneList').
-  component('sceneList', {
-    templateUrl: 'scene-list/scene-list.template.html',
-    controller: function SceneListController() {
+  module('sceneEditor').
+  component('sceneEditor', {
+    templateUrl: 'scene-editor/scene-editor.template.html',
+    controller: function SceneEditorController() {
       this.scenes = [
         {"id": 0, "title": "live piano stream"},
         {"id": 1, "title": "please stand by"},
