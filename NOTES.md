@@ -15,3 +15,5 @@
 - [AngularJS application template](https://github.com/angular/angular-phonecat)
 - https://github.com/angular-ui/bootstrap
 - https://github.com/angular-ui/ui-sortable
+- [XML to JSON](https://github.com/johngeorgewright/angular-xml)
+  - https://github.com/abdmob/x2js
