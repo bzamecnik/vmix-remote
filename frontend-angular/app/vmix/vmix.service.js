@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('scenes').factory('vmixService', ['$http', 'settingsService',
-  function($http, settingsService) {
+angular.module('scenes').factory('vmixService',
+  ['$http', 'x2js', 'settingsService',
+  function($http, x2js, settingsService) {
     return {
       online: false,
       refreshing: false,
@@ -12,11 +13,12 @@ angular.module('scenes').factory('vmixService', ['$http', 'settingsService',
           method: 'GET',
           url: settingsService.vmixApiUrl + "/example-state.xml"
         }).then(function(response) {
-          service.statusXml = response.data;
+          // XML automatically converted to JSON using the X2JS interceptor
+          service.status = response.data;
           service.online = true;
           service.refreshing = false;
         }, function(response) {
-          service.statusXml = undefined;
+          service.status = undefined;
           service.online = false;
           service.refreshing = false;
         });
