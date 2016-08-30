@@ -8,7 +8,7 @@ angular.
       function SceneEditorController(sceneRepositoryService) {
         var ctrl = this;
         ctrl.scenes = [];
-        sceneRepositoryService.scenes().then(function(scenes) {
+        sceneRepositoryService.getScenes().then(function(scenes) {
           ctrl.scenes = scenes;
         });
         ctrl.assignScene = function(id, type) {
@@ -16,6 +16,7 @@ angular.
           if (scene) {
             scene.type = type;
           }
+          sceneRepositoryService.saveScenes(ctrl.scenes);
         };
         ctrl.isUnassigned = function(scene) {
           return scene.type != 'live' && scene.type != 'jingle';

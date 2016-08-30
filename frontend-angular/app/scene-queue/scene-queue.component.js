@@ -9,7 +9,7 @@
       function SceneQueueController(sceneQueueService, sceneRepositoryService) {
         var ctrl = this;
         ctrl.scenes = [];
-        sceneRepositoryService.scenes().then(function(scenes) {
+        sceneRepositoryService.getScenes().then(function(scenes) {
           ctrl.scenes = scenes;
         });
         ctrl.values = sceneQueueService.values;
