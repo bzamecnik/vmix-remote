@@ -1,9 +1,17 @@
-<p>
-  <a href="#!/scene-editor/new">Add scene button</a>
-</p>
-
 <ul class="scenes">
   <li ng-repeat="scene in $ctrl.scenes">
-    <a href="#!/scene-editor/{{scene.id}}/edit">{{scene.title}}</a>
+    [{{scene.id}}] <a href="#!/scene-editor/{{scene.id}}/edit">{{scene.title}}</a>
+    - {{scene.type}}
   </li>
 </ul>
+
+<h2>New scene button</h2>
+<form>
+  <input type="text" ng-model="scene.id">
+  <input type="text" ng-model="scene.title">
+  <select ng-model="scene.type">
+    <option value="live">Live</option>
+    <option value="jingle">Jingle</option>
+  </select>
+  <button ng-click="$ctrl.addScene(scene.id, scene.title, scene.type)">Add</button>
+</form>

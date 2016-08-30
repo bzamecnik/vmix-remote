@@ -6,7 +6,15 @@ angular.
     templateUrl: 'scene-editor/scene-editor.template.html',
     controller: ['sceneRepositoryService',
       function SceneEditorController(sceneRepositoryService) {
-        this.scenes = sceneRepositoryService.scenes;
+        var ctrl = this;
+        ctrl.scenes = sceneRepositoryService.scenes;
+        ctrl.addScene = function(id, title, type) {
+          ctrl.scenes.push({
+            'id': id,
+            'title': title,
+            'type': type
+          });
+        };
       }
     ]
   });
