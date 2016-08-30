@@ -1,5 +1,9 @@
+<p>
+  <a href="#!/scene-editor/new">Add scene button</a>
+</p>
+
 <ul class="scenes">
   <li ng-repeat="scene in $ctrl.scenes">
-    {{scene.title}}
+    <a href="#!/scene-editor/{{scene.id}}/edit">{{scene.title}}</a>
   </li>
 </ul>

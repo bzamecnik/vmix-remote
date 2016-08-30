@@ -13,6 +13,12 @@ angular.
         when('/scene-editor', {
           template: '<scene-editor></scene-editor>'
         }).
+        when('/scene-editor/new', {
+          template: '<new-scene></new-scene>'
+        }).
+        when('/scene-editor/:id/edit', {
+          template: '<edit-scene></edit-scene>'
+        }).
         otherwise('/scene-queue');
     }
   ]);
