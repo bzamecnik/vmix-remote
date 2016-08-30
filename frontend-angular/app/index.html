@@ -1,28 +1,47 @@
 <!doctype html>
 <html lang="en" ng-app="vmixRemoteApp">
-  <head>
-    <meta charset="utf-8">
-    <title>vMix Remote Console</title>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="app.css" />
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="app.module.js"></script>
-    <script src="app.config.js"></script>
-    <script src="scene-editor/scene-editor.module.js"></script>
-    <script src="scene-editor/scene-editor.component.js"></script>
-    <script src="scene-queue/scene-queue.module.js"></script>
-    <script src="scene-queue/scene-queue.component.js"></script>
-  </head>
-  <body>
 
-  <p>
-    <a href="#!/scene-queue">Scene queue</a> |
-    <a href="#!/scene-editor">Edit scenes</a>
-  </p>
+<head>
+  <meta charset="utf-8">
+  <title>vMix Remote Console</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="app.css" />
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.module.js"></script>
+  <script src="app.config.js"></script>
+  <script src="scene-editor/scene-editor.module.js"></script>
+  <script src="scene-editor/scene-editor.component.js"></script>
+  <script src="scene-queue/scene-queue.module.js"></script>
+  <script src="scene-queue/scene-queue.component.js"></script>
+</head>
 
-  <div ng-view></div>
+<body>
 
-  </body>
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <h1>Pianomad vMix Remote</h1>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+
+      <ul class="nav nav-tabs">
+        <li>
+          <a href="#!/scene-queue">Scene queue</a>
+        </li>
+        <li>
+          <a href="#!/scene-editor">Edit scenes</a>
+        </li>
+      </ul>
+    </div>
+    <div class="row">
+      <div ng-view></div>
+    </div>
+
+  </div>
+
+</body>
+
 </html>
