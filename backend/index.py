@@ -26,4 +26,5 @@ def settings():
             return jsonify(json.load(file))
 
 if __name__ == "__main__":
-    app.run()
+    # http://stackoverflow.com/questions/23639355/extremely-long-wait-time-when-loading-rest-resource-from-angularjs
+    app.run(threaded=True)
