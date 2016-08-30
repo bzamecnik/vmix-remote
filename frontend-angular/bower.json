@@ -13,5 +13,6 @@
     "angular-xml": "^2.2.1",
     "angular-ui-sortable": "^0.14.3",
     "angular-bootstrap": "^2.1.3",
+    "font-awesome": "^4.6.3"
   }
 }

@@ -2,8 +2,11 @@
   <h2 class="capitalize">{{sceneType}}</h2>
   <ul>
     <li ng-repeat="scene in $ctrl.scenes |filter: {type: sceneType}">
-      [{{scene.id}}] {{scene.title}}
-      <button ng-click="$ctrl.assignScene(scene.id, '')">x</button>
+      <span class="label label-info">{{scene.id}}</span>
+      {{scene.title}}
+      <button ng-click="$ctrl.assignScene(scene.id, '')" class="btn btn-danger">
+        <i class="fa fa-trash"></i>
+      </button>
     </li>
   </ul>
 </div>
@@ -11,9 +14,10 @@
 <h2>Unassigned scenes</h2>
 <ul class="scenes">
   <li ng-repeat="scene in $ctrl.scenes |filter: $ctrl.isUnassigned">
-    [{{scene.id}}] {{scene.title}}
+    <span class="label label-info">{{scene.id}}</span>
+    {{scene.title}}
     <button ng-repeat="sceneType in ['live', 'jingle']"
       ng-click="$ctrl.assignScene(scene.id, sceneType)"
-      class="capitalize">{{sceneType}}</button>
+      class="capitalize btn btn-default">{{sceneType}}</button>
   </li>
 </ul>

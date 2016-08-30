@@ -12,12 +12,12 @@
   </div>
 </div>
 
-<button ng-click="$ctrl.dequeue()">Dequeue</button>
-
 <p>
-  Queue: {{$ctrl.values() | json}}
+  <button ng-click="$ctrl.dequeue()" class="btn btn-success">Dequeue</button>
 </p>
-
 <p>
-  Dequeued: {{$ctrl.dequeued}}
+  Queue: <code>{{$ctrl.values() | json}}</code>
+</p>
+<p>
+  Active scene: <code>{{$ctrl.dequeued}}</code>
 </p>
