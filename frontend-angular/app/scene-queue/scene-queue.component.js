@@ -5,15 +5,9 @@
     module('sceneQueue').
     component('sceneQueue',  {
       templateUrl: 'scene-queue/scene-queue.template.html',
-      controller: ['sceneQueueService',
-      function SceneQueueController(sceneQueueService) {
-        this.scenes = [
-          {"id": 0, "title": "live piano stream"},
-          {"id": 1, "title": "please stand by"},
-          {"id": 2, "title": "youtube jingle"},
-          {"id": 3, "title": "twitch jingle"},
-          {"id": 4, "title": "facebook jingle"}
-        ];
+      controller: ['sceneQueueService', 'sceneRepositoryService',
+      function SceneQueueController(sceneQueueService, sceneRepositoryService) {
+        this.scenes = sceneRepositoryService.scenes;
         this.values = sceneQueueService.values;
         this.dequeued = undefined;
         this.enqueue = sceneQueueService.enqueue;

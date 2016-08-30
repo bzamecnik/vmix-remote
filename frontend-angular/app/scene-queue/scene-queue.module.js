@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('sceneQueue', []);
+angular.module('sceneQueue', ['scenes']);
