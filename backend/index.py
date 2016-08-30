@@ -2,8 +2,13 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 import json
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+# enable CORS since the back-end is on a different place than th front-end
+CORS(app)
+
 app.debug = True
 
 settings_file = 'settings.json'
