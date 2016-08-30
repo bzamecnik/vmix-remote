@@ -7,7 +7,10 @@ angular.
     controller: ['sceneRepositoryService',
       function SceneEditorController(sceneRepositoryService) {
         var ctrl = this;
-        ctrl.scenes = sceneRepositoryService.scenes;
+        ctrl.scenes = [];
+        sceneRepositoryService.scenes.then(function(scenes) {
+          ctrl.scenes = scenes;
+        });
         ctrl.assignScene = function(id, type) {
           var scene = ctrl.scenes.find(function(scene) { return scene.id == id; })
           if (scene) {

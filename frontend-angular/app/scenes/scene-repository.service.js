@@ -1,15 +1,15 @@
 'use strict';
 
 // This services provides a repository of scene definitions.
-angular.module('scenes').factory('sceneRepositoryService', function() {
-  var scenes = [
-    {id: "0", title: "live piano stream", type: "live"},
-    {id: "1", title: "please stand by"},
-    {id: "2", title: "youtube jingle"},
-    {id: "3", title: "twitch jingle", type: "jingle"},
-    {id: "4", title: "facebook jingle"}
-  ];
-  return {
-    "scenes": scenes
-  };
-});
+angular.module('scenes').factory('sceneRepositoryService', ['settingsService', '$http',
+  function(settingsService, $http) {
+    return {
+      // reads the scenes from the backend one
+      // extracts the list of scenes from a wrapper object
+      // returns a promise
+      scenes: $http.get(settingsService.backendApiUrl + '/settings').then(function(response) {
+        return response.data.scenes;
+      })
+    };
+  }
+]);

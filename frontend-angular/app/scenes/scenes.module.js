@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('scenes', []);
+angular.module('scenes', ['settings']);
