@@ -27,4 +27,4 @@ def settings():
 
 if __name__ == "__main__":
     # http://stackoverflow.com/questions/23639355/extremely-long-wait-time-when-loading-rest-resource-from-angularjs
-    app.run(threaded=True)
+    app.run(host="0.0.0.0", threaded=True)
