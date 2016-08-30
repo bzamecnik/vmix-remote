@@ -24,6 +24,7 @@
   <script src="settings/settings.service.js"></script>
   <script src="vmix/vmix.module.js"></script>
   <script src="vmix/vmix.service.js"></script>
+  <script src="vmix/vmix-refresh.component.js"></script>
 </head>
 
 <body>
@@ -35,18 +36,22 @@
   </nav>
   <div class="container">
     <div class="row">
-
-      <ul class="nav nav-tabs">
-        <li>
-          <a href="#!/scene-queue"><i class="fa fa-film"></i> Scene queue</a>
-        </li>
-        <li>
-          <a href="#!/scene-editor"><i class="fa fa-edit"></i> Edit scenes</a>
-        </li>
-        <li>
-          <a href="#!/settings"><i class="fa fa-cog"></i> Settings</a>
-        </li>
-      </ul>
+      <div class="col-sm-11">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#!/scene-queue"><i class="fa fa-film"></i> Scene queue</a>
+          </li>
+          <li>
+            <a href="#!/scene-editor"><i class="fa fa-edit"></i> Edit scenes</a>
+          </li>
+          <li>
+            <a href="#!/settings"><i class="fa fa-cog"></i> Settings</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-1">
+        <vmix-refresh></vmix-refresh>
+      </div>
     </div>
     <div class="row">
       <div ng-view></div>
