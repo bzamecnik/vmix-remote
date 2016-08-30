@@ -1,5 +1,11 @@
 <div class="scenes">
-  <button ng-repeat="scene in $ctrl.scenes" class="btn btn-primary tile"
+  <button ng-repeat="scene in $ctrl.scenes"
+  class="btn tile"
+  ng-class="{
+    'btn-primary': !$ctrl.isEnqueued(scene.id),
+    'btn-warning': $ctrl.isEnqueued(scene.id),
+    'btn-danger': $ctrl.dequeued == scene.id
+  }"
   ng-click="$ctrl.enqueue(scene.id)">{{scene.title}}</button>
 </div>
 

@@ -5,11 +5,14 @@ angular.module('sceneQueue').factory('sceneQueueService', function() {
   // A simple queue with unique values.
   var values = [];
   return {
+    "contains": function(value) {
+      return values.indexOf(value) >= 0;
+    },
     "values": function() {
       return values;
     },
     "enqueue": function(value) {
-      if (values.indexOf(value) < 0) {
+      if (!this.contains(value)) {
         values.push(value);
       }
     },

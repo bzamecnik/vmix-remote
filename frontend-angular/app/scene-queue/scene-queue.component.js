@@ -10,10 +10,11 @@
         this.scenes = sceneRepositoryService.scenes;
         this.values = sceneQueueService.values;
         this.dequeued = undefined;
-        this.enqueue = sceneQueueService.enqueue;
+        this.enqueue = function(value) { sceneQueueService.enqueue(value); };
         this.dequeue = function() {
           this.dequeued = sceneQueueService.dequeue();
         };
+        this.isEnqueued = sceneQueueService.contains;
       }]
     });
 })();
