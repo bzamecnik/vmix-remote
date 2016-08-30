@@ -1,8 +1,14 @@
 <div class="scenes">
   <button ng-repeat="scene in $ctrl.scenes" class="btn btn-primary tile"
-  ng-click="$ctrl.selectScene(scene.id)">{{scene.title}}</button>
+  ng-click="$ctrl.enqueue(scene.id)">{{scene.title}}</button>
 </div>
 
+<button ng-click="$ctrl.dequeue()">Dequeue</button>
+
 <p>
-  Selected scene: {{$ctrl.selectedScene}}
+  Queue: {{$ctrl.queue.values | json}}
+</p>
+
+<p>
+  Dequeued: {{$ctrl.dequeued}}
 </p>
