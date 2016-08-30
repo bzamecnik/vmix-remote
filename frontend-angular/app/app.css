@@ -3,3 +3,7 @@
   height: 150px;
   margin: 10px;
 }
+
+.capitalize {
+    text-transform: capitalize;
+}

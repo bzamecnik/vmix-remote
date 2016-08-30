@@ -1,6 +1,6 @@
 <div class="scenes">
   <div ng-repeat="sceneType in ['live', 'jingle']">
-    <h2>{{sceneType}}</h2>
+    <h2 class="capitalize">{{sceneType}}</h2>
     <button ng-repeat="scene in $ctrl.scenes |filter: {type: sceneType}"
     class="btn tile"
     ng-class="{

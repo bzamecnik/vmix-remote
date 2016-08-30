@@ -8,13 +8,15 @@ angular.
       function SceneEditorController(sceneRepositoryService) {
         var ctrl = this;
         ctrl.scenes = sceneRepositoryService.scenes;
-        ctrl.addScene = function(id, title, type) {
-          ctrl.scenes.push({
-            'id': id,
-            'title': title,
-            'type': type
-          });
+        ctrl.assignScene = function(id, type) {
+          var scene = ctrl.scenes.find(function(scene) { return scene.id == id; })
+          if (scene) {
+            scene.type = type;
+          }
         };
+        ctrl.isUnassigned = function(scene) {
+          return scene.type != 'live' && scene.type != 'jingle';
+        }
       }
     ]
   });

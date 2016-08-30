@@ -1,17 +1,19 @@
+<div ng-repeat="sceneType in ['live', 'jingle']">
+  <h2 class="capitalize">{{sceneType}}</h2>
+  <ul>
+    <li ng-repeat="scene in $ctrl.scenes |filter: {type: sceneType}">
+      [{{scene.id}}] {{scene.title}}
+      <button ng-click="$ctrl.assignScene(scene.id, '')">x</button>
+    </li>
+  </ul>
+</div>
+
+<h2>Unassigned scenes</h2>
 <ul class="scenes">
-  <li ng-repeat="scene in $ctrl.scenes">
-    [{{scene.id}}] <a href="#!/scene-editor/{{scene.id}}/edit">{{scene.title}}</a>
-    - {{scene.type}}
+  <li ng-repeat="scene in $ctrl.scenes |filter: $ctrl.isUnassigned">
+    [{{scene.id}}] {{scene.title}}
+    <button ng-repeat="sceneType in ['live', 'jingle']"
+      ng-click="$ctrl.assignScene(scene.id, sceneType)"
+      class="capitalize">{{sceneType}}</button>
   </li>
 </ul>
-
-<h2>New scene button</h2>
-<form>
-  <input type="text" ng-model="scene.id">
-  <input type="text" ng-model="scene.title">
-  <select ng-model="scene.type">
-    <option value="live">Live</option>
-    <option value="jingle">Jingle</option>
-  </select>
-  <button ng-click="$ctrl.addScene(scene.id, scene.title, scene.type)">Add</button>
-</form>
