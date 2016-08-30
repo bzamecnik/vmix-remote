@@ -5,4 +5,5 @@ angular.module('vmixRemoteApp', [
   'sceneQueue',
   'sceneEditor',
   'settings',
+  'vmix',
 ]);
