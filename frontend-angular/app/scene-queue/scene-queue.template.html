@@ -1,5 +1,8 @@
-<ul class="scenes">
-  <li ng-repeat="scene in $ctrl.scenes">
-    {{scene.title}}
-  </li>
-</ul>
+<div class="scenes">
+  <button ng-repeat="scene in $ctrl.scenes" class="btn btn-primary tile"
+  ng-click="$ctrl.selectScene(scene.id)">{{scene.title}}</button>
+</div>
+
+<p>
+  Selected scene: {{$ctrl.selectedScene}}
+</p>

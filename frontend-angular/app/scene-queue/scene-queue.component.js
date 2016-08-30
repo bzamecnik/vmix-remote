@@ -12,5 +12,9 @@ angular.
         {"id": 3, "title": "twitch jingle"},
         {"id": 4, "title": "facebook jingle"}
       ];
+      this.selectedScene = 0;
+      this.selectScene = function(sceneId) {
+        this.selectedScene = sceneId;
+      };
     }
   });
