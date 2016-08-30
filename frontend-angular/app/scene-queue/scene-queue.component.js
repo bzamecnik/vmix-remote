@@ -8,7 +8,8 @@
       controller: ['sceneQueueService', 'sceneRepositoryService',
       function SceneQueueController(sceneQueueService, sceneRepositoryService) {
         var ctrl = this;
-        sceneRepositoryService.scenes.then(function(scenes) {
+        ctrl.scenes = [];
+        sceneRepositoryService.scenes().then(function(scenes) {
           ctrl.scenes = scenes;
         });
         ctrl.values = sceneQueueService.values;

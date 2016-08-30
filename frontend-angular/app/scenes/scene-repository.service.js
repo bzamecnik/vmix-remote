@@ -4,12 +4,16 @@
 angular.module('scenes').factory('sceneRepositoryService', ['settingsService', '$http',
   function(settingsService, $http) {
     return {
-      // reads the scenes from the backend one
+      // reads the scenes from the backend
       // extracts the list of scenes from a wrapper object
       // returns a promise
-      scenes: $http.get(settingsService.backendApiUrl + '/settings').then(function(response) {
-        return response.data.scenes;
-      })
+      scenes: function() {
+        return $http.get(settingsService.backendApiUrl + '/settings').then(function(response) {
+          return response.data.scenes;
+        }, function(response) {
+          console.log('Error while loading scenes:' + JSON.stringify(response));
+        })
+      }
     };
   }
 ]);
